@@ -40,7 +40,7 @@ class TrackerCallback extends Controller
             $trailer = $data['Trailer'];
             $deadlineTime = $job['DeadlineTime'];
 
-            $currentJob = $em->getRepository(TakenJob::class)->findBy([
+            $currentJob = $em->getRepository(TakenJob::class)->findOneBy([
                 'deadlineTime' => $deadlineTime,
                 'driverToken' => $driverToken,
             ]);
