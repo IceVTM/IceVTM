@@ -1,3 +1,7 @@
 index:
+    path: /
+    controller: App\Controller\HomeController::indexAction
+
+trackerCallback:
     path: /trackerCallback
     controller: App\Controller\TrackerCallback::callbackAction

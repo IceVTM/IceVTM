@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th>
+                Driver
+            </th>
+            <th>
+                Added At
+            </th>
+            <th>
+                Updated At
+            </th>
+            <th>
+                Pickup
+            </th>
+            <th>
+                Destination
+            </th>
+            <th>
+                Cargo
+            </th>
+            <th>
+                Estimated Income
+            </th>
+            <th>
+                Trailer Wear
+            </th>
+            <th>
+                Deadline Time
+            </th>
+        </tr>
+    </thead>
+    {% for job in takenJobs %}
+        <tr>
+            <td>
+                {{ job.driverToken }}
+            </td>
+            <td>
+                {{ job.addedAt|date('r') }}
+            </td>
+            <td>
+                {{ job.updatedAt|date('r') }}
+            </td>
+            <td>
+                {{ job.pickupCompany }} <strong>in</strong> {{ job.pickupCity }}
+            </td>
+            <td>
+                {{ job.destinationCompany }} <strong>in</strong> {{ job.destinationCity }}
+            </td>
+            <td>
+                {{ job.cargo }}
+            </td>
+            <td>
+                {{ job.estimatedIncome }}
+            </td>
+            <td>
+                {{ job.trailerWear }}
+            </td>
+            <td>
+                {{ job.deadlineTime|date('r') }}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}
