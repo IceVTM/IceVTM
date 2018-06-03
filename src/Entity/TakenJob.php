@@ -1,7 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,21 +18,18 @@ class TakenJob
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $jobId;
-
-    /**
      * @ORM\Column(type="string")
      */
     private $driverToken;
 
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     private $addedAt;
 
     /**
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
@@ -72,9 +70,14 @@ class TakenJob
     private $destinationCompany;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="datetime")
      */
-    private $completed;
+    private $deadlineTime;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $trailerWear;
 
     /**
      * @return mixed
@@ -82,22 +85,6 @@ class TakenJob
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getJobId()
-    {
-        return $this->jobId;
-    }
-
-    /**
-     * @param mixed $jobId
-     */
-    public function setJobId($jobId)
-    {
-        $this->jobId = $jobId;
     }
 
     /**
@@ -263,16 +250,32 @@ class TakenJob
     /**
      * @return mixed
      */
-    public function getCompleted()
+    public function getDeadlineTime()
     {
-        return $this->completed;
+        return $this->deadlineTime;
     }
 
     /**
-     * @param mixed $completed
+     * @param mixed $deadlineTime
      */
-    public function setCompleted($completed)
+    public function setDeadlineTime($deadlineTime)
     {
-        $this->completed = $completed;
+        $this->deadlineTime = $deadlineTime;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTrailerWear()
+    {
+        return $this->trailerWear;
+    }
+
+    /**
+     * @param mixed $trailerWear
+     */
+    public function setTrailerWear($trailerWear)
+    {
+        $this->trailerWear = $trailerWear;
     }
 }
