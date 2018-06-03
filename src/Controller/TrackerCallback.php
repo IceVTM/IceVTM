@@ -35,6 +35,7 @@ class TrackerCallback extends Controller
         if ($form->isSubmitted() && $form->isValid() && !empty($driverToken)) {
             $em = $this->get('doctrine.orm.entity_manager');
 
+            $driverToken = base64_decode($driverToken);
             $data = $form->getData();
             $job = $data['Job'];
             $trailer = $data['Trailer'];
