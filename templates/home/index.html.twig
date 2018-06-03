@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block head %}
+    <meta http-equiv="refresh" content="10">
+    {{ parent() }}
+{% endblock %}
+
 {% block body %}
 <table class="table">
     <thead class="thead-light">
