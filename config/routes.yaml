@@ -2,6 +2,9 @@ index:
     path: /
     controller: App\Controller\HomeController::indexAction
 
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
 trackerCallback:
     path: /trackerCallback
     controller: App\Controller\TrackerCallback::callbackAction
