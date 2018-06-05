@@ -1,0 +1,15 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% form_theme form 'form/bootstrap_4_label_layout.html.twig' %}
+
+<h1 class="font-weight-light mb-3">
+    {{ 'resetting.reset.submit'|trans }}
+</h1>
+
+
+{{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset' } }) }}
+    {{ form_widget(form) }}
+    <div>
+        <input type="submit" value="{{ 'resetting.reset.submit'|trans }}" class="btn btn-block btn-primary" />
+    </div>
+{{ form_end(form) }}
