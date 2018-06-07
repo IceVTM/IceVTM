@@ -1,6 +1,10 @@
 index:
     path: /
-    controller: App\Controller\HomeController::indexAction
+    controller: App\Controller\AppController::indexAction
+
+live_feed:
+    path: /live/jobs
+    controller: App\Controller\LiveController::feedAction
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"

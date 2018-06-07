@@ -5,9 +5,9 @@ namespace App\Controller;
 use App\Entity\TakenJob;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class HomeController extends Controller
+class LiveController extends Controller
 {
-    public function indexAction()
+    public function feedAction()
     {
         $em = $this->get('doctrine.orm.entity_manager');
 
@@ -20,11 +20,10 @@ class HomeController extends Controller
         );
 
         return $this->render(
-            'home/index.html.twig',
+            'live/jobs.html.twig',
             [
                 'takenJobs' => $jobs
             ]
         );
     }
-
 }
