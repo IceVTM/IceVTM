@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        html, body {height: 100%; margin: 0;}
+    </style>
+{% endblock %}
+
 {% block body %}
     <div class="container-fluid h-100">
         <div class="row justify-content-center align-items-center h-100">
