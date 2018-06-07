@@ -1,0 +1,14 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="form-group">
+    <label for="profile_username" class="form-control-label">{{ 'profile.show.username'|trans }}</label>
+    <input type="text" readonly class="form-control-plaintext" id="profile_username" value="{{ user.username }}">
+</div>
+<div class="form-group">
+    <label for="profile_email" class="form-control-label">{{ 'profile.show.email'|trans }}</label>
+    <input type="text" readonly class="form-control-plaintext" id="profile_username" value="{{ user.email }}">
+</div>
+
+<div>
+    <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-secondary">Edit</a>
+</div>

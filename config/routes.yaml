@@ -15,8 +15,12 @@ fos_user_resetting:
 
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
-    prefix: "/profile"
+    prefix: "/profile/security"
 
 trackerCallback:
     path: /trackerCallback
     controller: App\Controller\TrackerCallback::callbackAction
+
+profile:
+    resource: routes_profile.yaml
+    prefix: "/profile"

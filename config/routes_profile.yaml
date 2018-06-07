@@ -1,0 +1,3 @@
+profile_security:
+    path: /security
+    controller: App\Controller\ProfileController::securityAction

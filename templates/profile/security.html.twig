@@ -1,0 +1,16 @@
+{% extends 'profile/layout.html.twig' %}
+
+{% block title %}Security{% endblock %}
+
+{% block profile_content %}
+    <div class="form-group">
+        <label for="profile_tfa" class="form-control-label">Two Factor Authentication <span class="badge badge-danger">Disabled</span></label>
+        <div id="profile_tfa">
+            <a href="#" class="btn btn-success">Enable</a>
+        </div>
+    </div>
+
+    <div>
+        <a href="{{ path('fos_user_change_password') }}" class="btn btn-secondary">Change Password</a>
+    </div>
+{% endblock %}

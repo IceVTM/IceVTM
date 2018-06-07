@@ -1,0 +1,8 @@
+{% extends "profile/layout.html.twig" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block fos_user_content %}
+    <div class="alert alert-info"><i class="fa fa-info-circle mr-1"></i> Profile images are managed by Gravatar.</div>
+    {% include "@FOSUser/Profile/show_content.html.twig" %}
+{% endblock fos_user_content %}
