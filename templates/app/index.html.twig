@@ -2,51 +2,30 @@
 
 {% block content %}
     <div class="row">
+        {% for title, totals in stats %}
         <div class="col col-12 col-xl-6 text-center mb-4">
-            <h2 class="mb-3">Company Stats</h2>
+            <h2 class="mb-3">{{ title }}</h2>
             <div class="card-group">
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="card-title text-primary">1000</h3>
-                        <p class="card-text text-muted">Jobs Completed</p>
+                        <h3 class="card-title text-primary">{{ totals.jobs }}</h3>
+                        <p class="card-text text-muted">Job{{ totals.jobs > 1 ? 's' : '' }} Submitted</p>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="card-title text-primary">&dollar;23400</h3>
+                        <h3 class="card-title text-primary">&euro;{{ totals.income }}</h3>
                         <p class="card-text text-muted">Earned</p>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title text-primary">143</h3>
-                        <p class="card-text text-muted">Miles Driven</p>
-                    </div>
-                </div>
+                {#<div class="card">#}
+                    {#<div class="card-body">#}
+                        {#<h3 class="card-title text-primary">143</h3>#}
+                        {#<p class="card-text text-muted">Miles Driven</p>#}
+                    {#</div>#}
+                {#</div>#}
             </div>
         </div>
-        <div class="col col-12 col-xl-6 text-center mb-4">
-            <h2 class="mb-3">My Stats</h2>
-            <div class="card-group">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title text-primary">12</h3>
-                        <p class="card-text text-muted">Jobs Completed</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title text-primary">&dollar;204</h3>
-                        <p class="card-text text-muted">Earned</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title text-primary">143</h3>
-                        <p class="card-text text-muted">Miles Driven</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 {% endblock %}
