@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\DriverToken;
 use App\Entity\TakenJob;
 use App\Form\Type\TrackerCallbackType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class TrackerCallback extends Controller
 {
@@ -17,7 +19,15 @@ class TrackerCallback extends Controller
      */
     public function callbackAction(Request $request)
     {
-        $driverToken = $request->headers->get('X-UserPassword');
+        $em = $this->get('doctrine.orm.entity_manager');
+        $driverTokenEncoded = $request->headers->get('X-UserPassword', '');
+
+        /** @var DriverToken $driverToken */
+        $driverToken = $em->getRepository('App:DriverToken')->getActiveDriverTokenByToken(base64_decode($driverTokenEncoded));
+
+        if (!$driverToken) {
+            throw new UnauthorizedHttpException('X-UserPassword');
+        }
 
         $form = $this->createForm(
             TrackerCallbackType::class,
@@ -32,10 +42,7 @@ class TrackerCallback extends Controller
             $form->submit(json_decode($content, true));
         }
 
-        if ($form->isSubmitted() && $form->isValid() && !empty($driverToken)) {
-            $em = $this->get('doctrine.orm.entity_manager');
-
-            $driverToken = base64_decode($driverToken);
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $job = $data['Job'];
             $trailer = $data['Trailer'];

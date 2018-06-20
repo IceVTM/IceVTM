@@ -10,7 +10,7 @@
                 <a href="{{ path('profile_security') }}" class="list-group-item list-group-item-action{{ app.request.get('_route') in ['profile_security', 'fos_user_change_password'] ? ' active' }}">
                     <i class="fas fa-fw fa-lock mr-1"></i> Security
                 </a>
-                <a href="#" class="list-group-item list-group-item-action">
+                <a href="{{ path('profile_driver_token') }}" class="list-group-item list-group-item-action{{ app.request.get('_route') in ['profile_driver_token'] ? ' active' }}">
                     <i class="fas fa-fw fa-key mr-1"></i> Driver Token
                 </a>
             </div>

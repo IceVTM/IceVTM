@@ -1,0 +1,24 @@
+{% extends 'profile/layout.html.twig' %}
+
+{% block title %}Driver Token{% endblock %}
+
+{% block profile_content %}
+    {{ form_start(form) }}
+        <div class="form-group">
+            <label for="profile_driver_token" class="form-control-label">Your Driver Token</label>
+            <div class="form-control d-flex align-items-center pt-2 pb-2">
+                <span id="profile_driver_token" class="mr-auto">
+                    {{ driverToken.token }}
+                </span>
+                <button type="submit" class="btn btn-sm btn-primary ml-2">
+                    <i class="fa fa-sync-alt"></i> Regenerate
+                </button>
+            </div>
+            <small class="text-muted">
+                This is your unique token to use with the tracking application. Keep this safe.
+            </small>
+        </div>
+
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock %}

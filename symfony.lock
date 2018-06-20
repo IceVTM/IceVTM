@@ -80,6 +80,12 @@
     "gedmo/doctrine-extensions": {
         "version": "v2.4.35"
     },
+    "ircmaxell/random-lib": {
+        "version": "v1.2.0"
+    },
+    "ircmaxell/security-lib": {
+        "version": "v1.1.0"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },

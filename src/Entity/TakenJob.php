@@ -18,7 +18,8 @@ class TakenJob
     private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\ManyToOne(targetEntity="App\Entity\DriverToken", inversedBy="takenJobs")
+     * @ORM\JoinColumn(nullable=false, referencedColumnName="token")
      */
     private $driverToken;
 
@@ -88,193 +89,193 @@ class TakenJob
     }
 
     /**
-     * @return mixed
+     * @return DriverToken|null
      */
-    public function getDriverToken()
+    public function getDriverToken(): ?DriverToken
     {
         return $this->driverToken;
     }
 
     /**
-     * @param mixed $driverToken
+     * @param DriverToken|null $driverToken
      */
-    public function setDriverToken($driverToken)
+    public function setDriverToken(?DriverToken $driverToken)
     {
         $this->driverToken = $driverToken;
     }
 
     /**
-     * @return mixed
+     * @return \DateTimeInterface|null
      */
-    public function getAddedAt()
+    public function getAddedAt(): ?\DateTimeInterface
     {
         return $this->addedAt;
     }
 
     /**
-     * @param mixed $addedAt
+     * @param \DateTimeInterface $addedAt
      */
-    public function setAddedAt($addedAt)
+    public function setAddedAt(\DateTimeInterface $addedAt)
     {
         $this->addedAt = $addedAt;
     }
 
     /**
-     * @return mixed
+     * @return \DateTimeInterface|null
      */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
     /**
-     * @param mixed $updatedAt
+     * @param \DateTimeInterface $updatedAt
      */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt(\DateTimeInterface $updatedAt)
     {
         $this->updatedAt = $updatedAt;
     }
 
     /**
-     * @return mixed
+     * @return null|string
      */
-    public function getGame()
+    public function getGame(): ?string
     {
         return $this->game;
     }
 
     /**
-     * @param mixed $game
+     * @param string $game
      */
-    public function setGame($game)
+    public function setGame(string $game)
     {
         $this->game = $game;
     }
 
     /**
-     * @return mixed
+     * @return null|string
      */
-    public function getPickupCity()
+    public function getPickupCity(): ?string
     {
         return $this->pickupCity;
     }
 
     /**
-     * @param mixed $pickupCity
+     * @param string $pickupCity
      */
-    public function setPickupCity($pickupCity)
+    public function setPickupCity(string $pickupCity)
     {
         $this->pickupCity = $pickupCity;
     }
 
     /**
-     * @return mixed
+     * @return null|string
      */
-    public function getDestinationCity()
+    public function getDestinationCity(): ?string
     {
         return $this->destinationCity;
     }
 
     /**
-     * @param mixed $destinationCity
+     * @param string $destinationCity
      */
-    public function setDestinationCity($destinationCity)
+    public function setDestinationCity(string $destinationCity)
     {
         $this->destinationCity = $destinationCity;
     }
 
     /**
-     * @return mixed
+     * @return null|string
      */
-    public function getEstimatedIncome()
+    public function getEstimatedIncome(): ?string
     {
         return $this->estimatedIncome;
     }
 
     /**
-     * @param mixed $estimatedIncome
+     * @param string $estimatedIncome
      */
-    public function setEstimatedIncome($estimatedIncome)
+    public function setEstimatedIncome(string $estimatedIncome)
     {
         $this->estimatedIncome = $estimatedIncome;
     }
 
     /**
-     * @return mixed
+     * @return null|string
      */
-    public function getCargo()
+    public function getCargo(): ?string
     {
         return $this->cargo;
     }
 
     /**
-     * @param mixed $cargo
+     * @param string $cargo
      */
-    public function setCargo($cargo)
+    public function setCargo(string $cargo)
     {
         $this->cargo = $cargo;
     }
 
     /**
-     * @return mixed
+     * @return null|string
      */
-    public function getPickupCompany()
+    public function getPickupCompany(): ?string
     {
         return $this->pickupCompany;
     }
 
     /**
-     * @param mixed $pickupCompany
+     * @param string $pickupCompany
      */
-    public function setPickupCompany($pickupCompany)
+    public function setPickupCompany(string $pickupCompany)
     {
         $this->pickupCompany = $pickupCompany;
     }
 
     /**
-     * @return mixed
+     * @return null|string
      */
-    public function getDestinationCompany()
+    public function getDestinationCompany(): ?string
     {
         return $this->destinationCompany;
     }
 
     /**
-     * @param mixed $destinationCompany
+     * @param string $destinationCompany
      */
-    public function setDestinationCompany($destinationCompany)
+    public function setDestinationCompany(string $destinationCompany)
     {
         $this->destinationCompany = $destinationCompany;
     }
 
     /**
-     * @return mixed
+     * @return \DateTimeInterface|null
      */
-    public function getDeadlineTime()
+    public function getDeadlineTime(): ?\DateTimeInterface
     {
         return $this->deadlineTime;
     }
 
     /**
-     * @param mixed $deadlineTime
+     * @param \DateTimeInterface $deadlineTime
      */
-    public function setDeadlineTime($deadlineTime)
+    public function setDeadlineTime(\DateTimeInterface $deadlineTime)
     {
         $this->deadlineTime = $deadlineTime;
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getTrailerWear()
+    public function getTrailerWear(): ?float
     {
         return $this->trailerWear;
     }
 
     /**
-     * @param mixed $trailerWear
+     * @param float $trailerWear
      */
-    public function setTrailerWear($trailerWear)
+    public function setTrailerWear(float $trailerWear)
     {
         $this->trailerWear = $trailerWear;
     }
