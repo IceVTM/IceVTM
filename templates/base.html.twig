@@ -29,8 +29,8 @@
                             <li class="nav-item{{ app.request.get('_route') == 'index' ? ' active' }}">
                                 <a class="nav-link" href="{{ path('index') }}">Dashboard</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Job Tracker</a>
+                            <li class="nav-item{{ app.request.get('_route') == 'job_tracker' ? ' active' }}">
+                                <a class="nav-link" href="{{ path('job_tracker') }}">Job Tracker</a>
                             </li>
                         </ul>
                         <ul class="navbar-nav ml-auto">

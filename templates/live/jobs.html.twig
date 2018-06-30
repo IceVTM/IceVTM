@@ -41,7 +41,7 @@
     {% for job in takenJobs %}
         <tr>
             <td>
-                {{ job.driverToken }}
+                {{ job.driverToken.user.username }}
             </td>
             <td>
                 {{ job.addedAt|date('r') }}

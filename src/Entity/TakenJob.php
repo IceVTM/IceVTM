@@ -279,4 +279,12 @@ class TakenJob
     {
         $this->trailerWear = $trailerWear;
     }
+
+    /**
+     * @return bool
+     */
+    public function isCancelled(): bool
+    {
+        return $this->trailerWear == 0;
+    }
 }

@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>
+        Job Tracker
+    </h1>
+    <hr>
+    <table class="table table-borderless">
+        <thead>
+            <tr>
+                <th>
+                    Added At
+                </th>
+                <th>
+                    Pickup
+                </th>
+                <th>
+                    Destination
+                </th>
+                <th>
+                    Cargo
+                </th>
+                <th>
+                    Estimated Income
+                </th>
+                <th>
+                    Trailer Wear
+                </th>
+                <th>
+                    Status
+                </th>
+            </tr>
+        </thead>
+        {% for job in jobs %}
+            <tr {% if job.cancelled and not loop.first %}style="opacity: 0.4;"{% endif %}>
+                <td>
+                    {{ job.addedAt|date('r') }}
+                </td>
+                <td>
+                    {{ job.pickupCompany }} <strong>in</strong> {{ job.pickupCity }}
+                </td>
+                <td>
+                    {{ job.destinationCompany }} <strong>in</strong> {{ job.destinationCity }}
+                </td>
+                <td>
+                    {{ job.cargo }}
+                </td>
+                <td>
+                    {{ job.estimatedIncome }}
+                </td>
+                <td>
+                    {{ job.trailerWear }}
+                </td>
+                <td>
+                    {% if loop.first %}
+                        <span class="badge badge-primary text-uppercase">In Progress</span>
+                    {% elseif job.cancelled %}
+                        <span class="badge badge-warning text-uppercase">Cancelled</span>
+                    {% else %}
+                        <span class="badge badge-success text-uppercase">Completed</span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

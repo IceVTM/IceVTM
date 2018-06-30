@@ -21,10 +21,14 @@ fos_user_resetting:
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
     prefix: "/resetting"
 
-trackerCallback:
+tracker_callback:
     path: /trackerCallback
     controller: App\Controller\TrackerCallback::callbackAction
 
 profile:
     resource: routes_profile.yaml
     prefix: "/profile"
+
+job_tracker:
+    path: /job-tracker
+    controller: App\Controller\JobTrackerController:indexAction
