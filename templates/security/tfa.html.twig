@@ -1,0 +1,123 @@
+{% extends "base_login.html.twig" %}
+
+{% block fos_user_content %}
+    <h1 class="mb-3">Login</h1>
+
+    {% if authenticationError %}
+        <div class="alert alert-danger" role="alert">
+            {{ "scheb_two_factor.code_invalid"|trans(authenticationErrorData) }}
+        </div>
+    {% endif %}
+
+    {#<p>{{ "scheb_two_factor.choose_provider"|trans }}:#}
+        {#{% for provider in availableTwoFactorProviders %}#}
+            {#<a href="{{ path("security_tfa_login", {"preferProvider": provider}) }}">{{ provider }}</a>#}
+        {#{% endfor %}#}
+    {#</p>#}
+
+    <form action="{{ path("security_tfa_login_check") }}" method="post" class="mt-3">
+        <div class="form-group text-center">
+            <label>{{ "scheb_two_factor.auth_code"|trans }}{# {{ twoFactorProvider }}#}</label>
+            <div id="digits-container" class="d-flex ml-4 mr-4">
+                <input name="{{ authCodeParameterName }}" id="digits" class="form-control" maxlength="6" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false" type="tel" pattern="[0-9]+">
+            </div>
+        </div>
+
+        {% if displayTrustedOption %}
+            <p class="widget">
+                <label for="_trusted">
+                    <input id="_trusted" type="checkbox" name="{{ trustedParameterName }}" /> {{ "scheb_two_factor.trusted"|trans }}
+                </label>
+            </p>
+        {% endif %}
+
+        <div class="row align-items-center">
+            <div class="col">
+                <a class="btn btn-link" href="{{ path('fos_user_security_logout') }}" role="button">Cancel</a>
+            </div>
+            <div class="col text-right">
+                <input type="submit" class="btn btn-lg btn-primary" value="{{ 'security.login.submit'|trans([], 'FOSUserBundle') }}">
+            </div>
+        </div>
+    </form>
+{% endblock fos_user_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+      var digitsInput = $('#digits'),
+        digitsContainer = $('#digits-container'),
+        digits = {};
+
+      digitsInput.hide();
+
+      for (var i = 1; i <= 6; i++) {
+        (function(current) {
+          digitsContainer.append(
+            $('<input maxlength="1" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false" type="tel" class="form-control form-control-lg text-center input-digit ml-1 mr-' + (current === 3 ? 3 : 1) + ' pattern="[0-9]">')
+              .attr('aria-label', 'verification code digit ' + current)
+              .click(function () {
+                $(this).select();
+              })
+              .on('paste', function(e) {
+                e.preventDefault();
+                var pasteInt = parseInt(e.originalEvent.clipboardData.getData('text'));
+
+                if (!pasteInt) {
+                  return;
+                }
+
+                var pasteData = pasteInt.toString().split('', 7 - current),
+                  i = 0;
+
+                if (pasteData.length > i) {
+                  $(this).val(pasteData[i]);
+                }
+                i++;
+
+                $(this).nextAll().each(function() {
+                  if (pasteData.length > i) {
+                      $(this).val(pasteData[i]).focus();
+                  }
+                  i++;
+                });
+              })
+              .keydown(function (event) {
+                if (event.keyCode === 8 && current > 1 && this.value === '') {
+                  $(this).prev().val('').focus();
+                }
+              })
+              .keypress(function (event) {
+                var digit = parseInt(String.fromCharCode(event.keyCode));
+
+                if (event.keyCode !== 13 && !(digit >= 0 && digit <= 9)) {
+                  event.preventDefault();
+                }
+              })
+              .keyup(function (event) {
+                if (event.keyCode === 37) {
+                  $(this).prev().focus().select();
+                }
+                if (event.keyCode === 39) {
+                  $(this).next().focus().select();
+                }
+
+                var digit = parseInt(String.fromCharCode(event.keyCode));
+
+                if (digit >= 0 && digit <= 9) {
+                  digits[current] = digit;
+                  digitsInput.val(Object.keys(digits).map(function (value) { return digits[value]; }).join(''));
+
+                  if (current < 6) {
+                    $(this).next().focus().select();
+                  }
+                }
+              })
+          )
+        })(i);
+      }
+
+      digitsContainer.find('.input-digit').first().focus();
+    </script>
+{% endblock %}

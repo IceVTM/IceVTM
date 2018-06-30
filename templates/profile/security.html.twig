@@ -4,13 +4,137 @@
 
 {% block profile_content %}
     <div class="form-group">
-        <label for="profile_tfa" class="form-control-label">Two Factor Authentication <span class="badge badge-danger">Disabled</span></label>
+        <label for="profile_tfa" class="form-control-label">Two Factor Authentication <span class="badge badge-{{ app.user.googleAuthenticatorEnabled ? 'success' : 'danger' }}">{{ app.user.googleAuthenticatorEnabled ? 'Enabled' : 'Disabled' }}</span></label>
         <div id="profile_tfa">
-            <a href="#" class="btn btn-success">Enable</a>
+            {% if app.user.googleAuthenticatorEnabled %}
+                <button data-toggle="modal" data-target="#enableTfaModal" class="btn btn-outline-secondary">Regenerate</button>
+                <button data-toggle="modal" data-target="#disableTfaModal" class="btn btn-danger">Disable</button>
+            {% else %}
+                <button data-toggle="modal" data-target="#enableTfaModal" class="btn btn-success">Enable</button>
+            {% endif %}
         </div>
     </div>
 
     <div>
         <a href="{{ path('fos_user_change_password') }}" class="btn btn-secondary">Change Password</a>
     </div>
+{% endblock %}
+
+{% block modals %}
+    {% if tfaForm|default %}
+    <div class="modal fade modal_auto-focus" id="enableTfaModal" tabindex="-1" role="dialog" aria-labelledby="enableTfaModal__title" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                {{ form_start(tfaForm) }}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="enableTfaModal__title">
+                            Enable TFA
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_widget(tfaForm) }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Enable TFA</button>
+                    </div>
+                    {{ form_rest(tfaForm) }}
+                {{ form_end(tfaForm) }}
+            </div>
+        </div>
+    </div>
+    <div class="modal fade modal_auto-focus" id="generateTfaModal" tabindex="-1" role="dialog" aria-labelledby="generateTfaModal__title" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                {{ form_start(tfaForm) }}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="generateTfaModal__title">
+                            Generate TFA
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_widget(tfaForm) }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Generate TFA</button>
+                    </div>
+                    {{ form_rest(tfaForm) }}
+                {{ form_end(tfaForm) }}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if confirmTokenForm|default %}
+    <div class="modal fade modal_auto-focus" id="confirmTfaTokenModal" tabindex="-1" role="dialog" aria-labelledby="confirmTfaTokenModal__title" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                {{ form_start(confirmTokenForm) }}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmTfaTokenModal__title">
+                            {{ app.user.googleAuthenticatorEnabled ? 'Generate' : 'Enable' }} TFA
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Scan QR code:
+                        </p>
+                        <canvas id="tfa_qr"></canvas>
+                        <p>
+                            Or, enter the code manually:
+                        </p>
+                        <pre class="bg-light p-3"><code>{{ confirmToken.secret }}</code></pre>
+                        {{ form_widget(confirmTokenForm) }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">{{ app.user.googleAuthenticatorEnabled ? 'Generate' : 'Enable' }} TFA</button>
+                    </div>
+                    {{ form_rest(confirmTokenForm) }}
+                {{ form_end(confirmTokenForm) }}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
+    <script type="text/javascript">
+        {% if secretQrToken|default %}
+        (function() {
+          new QRious({
+            element: document.getElementById('tfa_qr'),
+            value: {{ secretQrToken|json_encode|raw }},
+            level: 'M',
+            size: 180
+          });
+        })();
+        {% endif %}
+
+        $('.modal_auto-focus').on('shown.bs.modal', function () {
+            $('input', this).first().trigger('focus')
+        });
+
+        $(window).on('load',function(){
+            {% if focusEnableTfaForm|default %}
+                $('#enableTfaModal').modal('show');
+            {% endif %}
+            {% if focusConfirmTfaTokenModal|default %}
+                $('#confirmTfaTokenModal').modal('show');
+            {% endif %}
+        });
+    </script>
 {% endblock %}

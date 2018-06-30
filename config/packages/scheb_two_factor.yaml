@@ -1,0 +1,4 @@
+scheb_two_factor:
+    google:
+        enabled: true
+        template: security/tfa.html.twig

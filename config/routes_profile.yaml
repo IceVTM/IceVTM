@@ -13,3 +13,7 @@ profile_driver_token:
     path: /driver-token
     controller: App\Controller\ProfileController::driverTokenAction
 
+profile_generate_tfa:
+    path: /security/generate-tfa
+    controller: App\Controller\ProfileController::generateTfaAction
+

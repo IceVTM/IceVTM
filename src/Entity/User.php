@@ -7,12 +7,13 @@ use Doctrine\Common\Collections\Collection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
  */
-class User extends BaseUser
+class User extends BaseUser implements TwoFactorInterface
 {
     /**
      * @ORM\Id
@@ -31,6 +32,11 @@ class User extends BaseUser
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\Column(name="googleAuthenticatorSecret", type="string", nullable=true)
+     */
+    private $googleAuthenticatorSecret;
 
     public function __construct()
     {
@@ -92,5 +98,37 @@ class User extends BaseUser
     public function setCreatedAt(\DateTimeInterface $createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isGoogleAuthenticatorEnabled(): bool
+    {
+        return $this->googleAuthenticatorSecret ? true : false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGoogleAuthenticatorUsername(): string
+    {
+        return $this->username;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGoogleAuthenticatorSecret(): string
+    {
+        return $this->googleAuthenticatorSecret;
+    }
+
+    /**
+     * @param null|string $googleAuthenticatorSecret
+     */
+    public function setGoogleAuthenticatorSecret(?string $googleAuthenticatorSecret): void
+    {
+        $this->googleAuthenticatorSecret = $googleAuthenticatorSecret;
     }
 }
