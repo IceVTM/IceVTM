@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\TakenJobRepository;
+use App\Repository\TakenJobRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,12 +21,7 @@ class AppController extends Controller
         $takenJobRepo = $em->getManager()->getRepository('App:TakenJob');
 
         $myCriteria = [
-            'driverToken' => array_map(
-                function($a) {
-                    return $a->getToken();
-                },
-                $this->getUser()->getDriverTokens()->toArray()
-            )
+            'driverToken' => $this->getUser()->getDriverTokens()->toArray()
         ];
 
         $totalJobs = $takenJobRepo->count([]);

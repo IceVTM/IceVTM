@@ -19,7 +19,7 @@ class TakenJob
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\DriverToken", inversedBy="takenJobs")
-     * @ORM\JoinColumn(nullable=false, referencedColumnName="token")
+     * @ORM\JoinColumn(nullable=false, referencedColumnName="id")
      */
     private $driverToken;
 
