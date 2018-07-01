@@ -287,4 +287,12 @@ class TakenJob
     {
         return $this->trailerWear == 0;
     }
+
+    /**
+     * @return bool
+     */
+    public function isInProgress(): bool
+    {
+        return $this->trailerWear != 0;
+    }
 }

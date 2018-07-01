@@ -51,13 +51,17 @@
                 <td>
                     {{ job.trailerWear }}
                 </td>
-                <td>
+                <td class="text-uppercase">
                     {% if loop.first %}
-                        <span class="badge badge-primary text-uppercase">In Progress</span>
+                        {% if job.inProgress %}
+                            <span class="badge badge-primary">In Progress</span>
+                        {% else %}
+                            <span class="badge badge-secondary">Not Started</span>
+                        {% endif %}
                     {% elseif job.cancelled %}
-                        <span class="badge badge-warning text-uppercase">Cancelled</span>
+                        <span class="badge badge-warning">Cancelled</span>
                     {% else %}
-                        <span class="badge badge-success text-uppercase">Completed</span>
+                        <span class="badge badge-success">Completed</span>
                     {% endif %}
                 </td>
             </tr>
