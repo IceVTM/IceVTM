@@ -23,7 +23,7 @@ class TrackerCallback extends Controller
         $driverTokenEncoded = $request->headers->get('X-UserPassword', '');
 
         /** @var DriverToken $driverToken */
-        $driverToken = $em->getRepository('App:DriverToken')->getActiveDriverTokenByToken(base64_decode($driverTokenEncoded));
+        $driverToken = $em->getRepository('App:DriverToken')->findActiveDriverTokenByToken(base64_decode($driverTokenEncoded));
 
         if (!$driverToken) {
             throw new UnauthorizedHttpException('X-UserPassword');

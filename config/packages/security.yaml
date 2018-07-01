@@ -37,6 +37,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        - { path: ^/trackerCallback$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login$, allow_if: "is_anonymous() and !is_authenticated()" }
         - { path: ^/login/tfa, role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
         - { path: ^/register, allow_if: "is_anonymous() and !is_authenticated()" }
